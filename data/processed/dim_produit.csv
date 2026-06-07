@@ -1,0 +1,18 @@
+﻿produit,division_code,categorie,prix_base_2023,unite,saison_extra,qte_panier,administre
+Riz brisé ordinaire,D01,Alimentaire,400,kg,0.02,30,False
+Riz parfumé importé,D01,Alimentaire,525,kg,0.02,10,False
+Mil (souna),D01,Alimentaire,300,kg,0.06,8,False
+Maïs,D01,Alimentaire,275,kg,0.05,5,False
+Huile végétale raffinée,D01,Alimentaire,1300,litre,0.03,5,False
+Sucre cristallisé,D01,Alimentaire,675,kg,0.02,4,False
+Pain (baguette 190g),D01,Alimentaire,175,unité,0.0,60,False
+Farine de blé,D01,Alimentaire,500,kg,0.02,4,False
+Lait en poudre,D01,Alimentaire,3600,kg,0.01,2,False
+Oignon local,D01,Alimentaire,500,kg,0.18,6,False
+Pomme de terre,D01,Alimentaire,500,kg,0.15,5,False
+Poisson frais (sardinelle),D01,Alimentaire,1200,kg,0.1,8,False
+Viande de bœuf avec os,D01,Alimentaire,3200,kg,0.04,4,False
+Gaz butane (6 kg),D04,Énergie,3000,bouteille,0.0,2,True
+Essence super (SP95),D07,Énergie,890,litre,0.0,20,True
+Gasoil (diesel),D07,Énergie,775,litre,0.0,15,True
+Électricité (tranche sociale),D04,Énergie,99,kWh,0.0,150,True

@@ -1,0 +1,85 @@
+// =====================================================================
+// Mesures DAX — Tableau de bord « Coût de la vie et inflation au Sénégal »
+// Créer une table de mesures vide (Entrer des données -> table "_Mesures")
+// puis coller chaque mesure (Modélisation -> Nouvelle mesure).
+// =====================================================================
+
+// ---- KPI INFLATION (dernier mois disponible) ------------------------
+
+Inflation globale =
+VAR d = MAX ( ihpc_national[date] )
+RETURN CALCULATE ( SELECTEDVALUE ( ihpc_national[var_annuelle_pct] ),
+                   ihpc_national[date] = d )
+
+Inflation alimentaire =
+VAR d = MAX ( ihpc_national[date] )
+RETURN CALCULATE ( SELECTEDVALUE ( ihpc_national[var_alim_annuelle_pct] ),
+                   ihpc_national[date] = d )
+
+Inflation énergie =
+VAR d = MAX ( ihpc_national[date] )
+RETURN CALCULATE ( SELECTEDVALUE ( ihpc_national[var_energie_annuelle_pct] ),
+                   ihpc_national[date] = d )
+
+// ---- INDICES ET PANIER ----------------------------------------------
+
+IHPC global =
+CALCULATE ( SELECTEDVALUE ( ihpc_national[indice_global] ),
+            ihpc_national[date] = MAX ( ihpc_national[date] ) )
+
+Pouvoir achat =
+CALCULATE ( SELECTEDVALUE ( ihpc_national[pouvoir_achat_index] ),
+            ihpc_national[date] = MAX ( ihpc_national[date] ) )
+
+Cout panier =
+CALCULATE ( SELECTEDVALUE ( panier_national[cout_panier] ),
+            panier_national[date] = MAX ( panier_national[date] ) )
+
+Cout panier réel =
+CALCULATE ( SELECTEDVALUE ( panier_national[cout_panier_reel] ),
+            panier_national[date] = MAX ( panier_national[date] ) )
+
+// ---- PRIX -----------------------------------------------------------
+
+Prix moyen = AVERAGE ( fact_prix[prix_moyen] )
+
+Prix moyen réel = AVERAGE ( fact_prix[prix_reel] )
+
+// Hausse cumulée d'un produit entre le 1er et le dernier mois du contexte
+Hausse cumulée % =
+VAR dmin = CALCULATE ( MIN ( fact_prix[date] ), ALLSELECTED ( dim_date ) )
+VAR dmax = CALCULATE ( MAX ( fact_prix[date] ), ALLSELECTED ( dim_date ) )
+VAR p0 = CALCULATE ( AVERAGE ( fact_prix[prix_moyen] ), fact_prix[date] = dmin )
+VAR p1 = CALCULATE ( AVERAGE ( fact_prix[prix_moyen] ), fact_prix[date] = dmax )
+RETURN DIVIDE ( p1 - p0, p0 )
+
+// ---- IHPC RÉGIONAL --------------------------------------------------
+
+Inflation région =
+CALCULATE ( AVERAGE ( ihpc_regional[var_annuelle_pct] ) )
+
+IHPC région = AVERAGE ( ihpc_regional[indice_global] )
+
+// ---- CONTRIBUTION D'UNE DIVISION À L'INFLATION (12 mois glissants) ---
+// Variation annuelle de l'indice national de la division × poids de la division.
+
+Inflation division =
+VAR dmax = MAX ( fact_ihpc[date] )
+VAR dmin = EDATE ( dmax, -12 )
+VAR i1 =
+    CALCULATE ( DIVIDE ( SUMX ( fact_ihpc, fact_ihpc[indice] * RELATED ( dim_region[poids_zone] ) ),
+                         SUMX ( fact_ihpc, RELATED ( dim_region[poids_zone] ) ) ),
+                fact_ihpc[date] = dmax )
+VAR i0 =
+    CALCULATE ( DIVIDE ( SUMX ( fact_ihpc, fact_ihpc[indice] * RELATED ( dim_region[poids_zone] ) ),
+                         SUMX ( fact_ihpc, RELATED ( dim_region[poids_zone] ) ) ),
+                fact_ihpc[date] = dmin )
+RETURN DIVIDE ( i1 - i0, i0 )
+
+Contribution inflation =
+[Inflation division] * SELECTEDVALUE ( dim_division[poids_frac] )
+
+// ---- FORMATAGE CONSEILLÉ --------------------------------------------
+// Inflation* / Hausse* / Contribution* : pourcentage, 1 décimale.
+// IHPC* / Pouvoir achat : nombre, 1 décimale.
+// Cout panier* / Prix moyen* : nombre entier + suffixe " FCFA".

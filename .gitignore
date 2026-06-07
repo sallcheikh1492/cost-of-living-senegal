@@ -1,0 +1,25 @@
+# Environnements Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Données traitées régénérables (gardées hors dépôt par défaut ;
+# commenter ces lignes pour les versionner)
+# data/processed/
+
+# Sorties volumineuses
+*.log
+.DS_Store
+Thumbs.db
+
+# Power BI (fichier lourd — utiliser Git LFS si versionné)
+# *.pbix
+
+# Fichiers temporaires
+~$*
+*.tmp
+
+# Config locale Claude Code
+.claude/

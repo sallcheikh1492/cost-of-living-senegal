@@ -1,0 +1,21 @@
+# Projet « Coût de la vie et inflation au Sénégal »
+# Installation : python -m venv .venv && .venv\Scripts\pip install -r requirements.txt
+
+pandas>=2.2
+numpy>=1.26
+matplotlib>=3.8
+seaborn>=0.13
+scikit-learn>=1.4
+statsmodels>=0.14
+
+# Exécution des notebooks
+jupyter>=1.0
+nbconvert>=7.0
+nbformat>=5.9
+ipykernel>=6.29
+
+# Prévision avancée
+prophet>=1.1
+
+# Carte choroplèthe (rendu des polygones GeoJSON ; pas de GDAL requis)
+pillow>=10.0

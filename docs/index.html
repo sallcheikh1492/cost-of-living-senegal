@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Coût de la vie et inflation au Sénégal (2018–2026) — Projet BI</title>
+<meta name="description" content="Projet Business Intelligence : analyse de l'inflation et du coût de la vie au Sénégal (2018-2026). Python, SQL, Power BI, forecasting SARIMA/Prophet, carte choroplèthe.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="tealine"></div>
+
+<header class="hero">
+  <div class="wrap">
+    <h1>Coût de la vie &amp; inflation au Sénégal</h1>
+    <p class="sub">Projet <b>Business Intelligence</b> de bout en bout (2018–2026) :
+       du nettoyage des données à la prévision, en passant par l'analyse SQL,
+       le data storytelling et le tableau de bord.</p>
+    <div class="badges">
+      <span class="badge">🐍 Python · pandas</span>
+      <span class="badge">🗄️ SQL · PostgreSQL</span>
+      <span class="badge">📊 Power BI</span>
+      <span class="badge">🔮 SARIMA / Prophet</span>
+      <span class="badge">🗺️ Carte choroplèthe</span>
+    </div>
+    <div class="cta">
+      <a class="btn primary" id="repoBtn" href="#" target="_blank">⭐ Code sur GitHub</a>
+      <a class="btn ghost" href="#dashboard">Voir les analyses ↓</a>
+    </div>
+  </div>
+</header>
+
+<!-- KPIs -->
+<section id="kpi">
+  <div class="wrap">
+    <h2>Résultats clés</h2>
+    <p class="lead">Indicateurs calculés sur la période 2018–2026.</p>
+    <div class="kpis" id="kpiGrid"></div>
+    <div class="note">
+      <b>Transparence des sources.</b> Les agrégats nationaux (trajectoire de
+      l'inflation, pic de 2022, base 100&nbsp;=&nbsp;2023, 12 divisions COICOP,
+      6 zones de collecte) sont <b>calibrés sur les chiffres officiels de l'ANSD
+      et de la Banque mondiale</b> (écart moyen &lt; 0,2&nbsp;pt). Le détail
+      mensuel par produit et région est <b>reconstruit</b> de façon cohérente
+      (granularité non publiée par l'ANSD) — à ne pas citer comme statistique
+      officielle produit par produit.
+    </div>
+  </div>
+</section>
+
+<!-- Dashboard interactif -->
+<section id="dashboard" style="background:#eef3f9">
+  <div class="wrap">
+    <h2>Tableau de bord interactif</h2>
+    <p class="lead">Graphiques générés à partir des données traitées du projet.</p>
+
+    <div class="card">
+      <h3>Évolution de l'inflation (glissement annuel)</h3>
+      <p class="cap">Inflation globale vs alimentaire vs énergie — pic de +14&nbsp;% en novembre 2022.</p>
+      <canvas id="chartInflation" height="120"></canvas>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <h3>Produits les plus inflationnistes</h3>
+        <p class="cap">Hausse cumulée des prix 2018 → 2026 (%).</p>
+        <canvas id="chartProducts" height="220"></canvas>
+      </div>
+      <div class="card">
+        <h3>Prévision de l'IHPC (12 mois)</h3>
+        <p class="cap">Historique + prévision SARIMA (base 100 = 2023).</p>
+        <canvas id="chartForecast" height="220"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Carte -->
+<section id="carte">
+  <div class="wrap">
+    <h2>Analyse régionale</h2>
+    <p class="lead">Les indicateurs des 6 zones de collecte de l'IHPC projetés sur
+       les 14 régions administratives (GeoJSON officiel).</p>
+    <div class="grid2">
+      <figure class="gallery" style="display:block;margin:0">
+        <div style="background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden">
+          <img src="assets/14_carte_inflation.png" alt="Carte de l'inflation par région">
+          <div style="padding:12px 14px;color:#64748b;font-size:.86rem">Inflation moyenne sur 12 mois par région</div>
+        </div>
+      </figure>
+      <figure class="gallery" style="display:block;margin:0">
+        <div style="background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden">
+          <img src="assets/15_carte_panier.png" alt="Carte du coût du panier par région">
+          <div style="padding:12px 14px;color:#64748b;font-size:.86rem">Coût moyen du panier de base par région</div>
+        </div>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- Galerie -->
+<section id="galerie" style="background:#eef3f9">
+  <div class="wrap">
+    <h2>Visualisations clés</h2>
+    <p class="lead">Extraits de l'analyse exploratoire (notebook Python).</p>
+    <div class="gallery">
+      <figure><img src="assets/02_heatmap_divisions.png" alt=""><figcaption>Inflation par division de consommation et par année</figcaption></figure>
+      <figure><img src="assets/04_alim_vs_energie.png" alt=""><figcaption>Inflation globale vs alimentaire vs énergie</figcaption></figure>
+      <figure><img src="assets/09_cout_panier.png" alt=""><figcaption>Coût du panier de base — nominal vs réel</figcaption></figure>
+      <figure><img src="assets/10_pouvoir_achat.png" alt=""><figcaption>Érosion du pouvoir d'achat</figcaption></figure>
+      <figure><img src="assets/08_decomposition_stl.png" alt=""><figcaption>Décomposition STL de l'IHPC national</figcaption></figure>
+      <figure><img src="assets/11_contribution_inflation.png" alt=""><figcaption>Contribution des divisions à l'inflation</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- Méthode & stack -->
+<section id="stack">
+  <div class="wrap">
+    <h2>Démarche &amp; technologies</h2>
+    <p class="lead">Un pipeline reproductible : <code>python scripts/run_all.py</code>.</p>
+    <div class="pills">
+      <span class="pill">1 · Compréhension des données</span>
+      <span class="pill">2 · Nettoyage &amp; features (Python)</span>
+      <span class="pill">3 · Analyse exploratoire</span>
+      <span class="pill">4 · Analyse SQL</span>
+      <span class="pill">5 · KPI inflation</span>
+      <span class="pill">6 · Forecasting (SARIMA/Prophet)</span>
+      <span class="pill">7 · Carte régionale</span>
+      <span class="pill">8 · Dashboard Power BI</span>
+      <span class="pill">9 · Recommandations</span>
+    </div>
+    <div class="note" style="background:#eef4fb;border-color:#d8e6f5;color:#1F4E79;margin-top:22px">
+      <b>Compétences démontrées :</b> analyse macroéconomique &amp; inflation ·
+      nettoyage et modélisation de données · SQL analytique · séries temporelles
+      &amp; forecasting · KPI économiques · data storytelling · analyse géospatiale ·
+      Power BI.
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>Projet portfolio Data Analyst / BI Developer · Données calibrées sur l'<a href="https://www.ansd.sn" target="_blank">ANSD</a>
+       (détail produit/région reconstruit).</p>
+    <p><a id="repoFoot" href="#" target="_blank">Voir le code source sur GitHub →</a></p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="data.js"></script>
+<script>
+const D = window.PROJECT_DATA, K = D.kpi;
+const NAVY="#1F4E79", RED="#C0392B", GREEN="#27AE60", ORANGE="#E67E22";
+
+// Lien GitHub (mis à jour automatiquement au déploiement)
+const REPO = window.REPO_URL || "https://github.com/kheuch1492/cost-of-living-senegal";
+document.getElementById("repoBtn").href = REPO;
+document.getElementById("repoFoot").href = REPO;
+
+// KPI cards
+const kpis = [
+  {v:"+"+K.inflation_2022+"%", l:"Inflation moyenne 2022 (pic)", c:"red"},
+  {v:"+"+K.pic+"%", l:"Sommet — "+K.pic_date, c:"red"},
+  {v:"+"+K.inflation_2024+"%", l:"Inflation 2024 (désinflation)", c:"green"},
+  {v:"+"+K.hausse_panier+"%", l:"Coût du panier (2018→2026)", c:""},
+  {v:K.top_produit_val+"%", l:"Produit n°1 : "+K.top_produit, c:""},
+  {v:"~"+K.forecast_moyen+"%", l:"Inflation prévue (12 mois)", c:"green"},
+];
+document.getElementById("kpiGrid").innerHTML = kpis.map(k=>
+  `<div class="kpi"><div class="v ${k.c}">${k.v}</div><div class="l">${k.l}</div></div>`).join("");
+
+const baseOpts = {responsive:true, plugins:{legend:{labels:{boxWidth:14}}},
+  interaction:{mode:"index",intersect:false}, scales:{x:{ticks:{maxTicksLimit:12}}}};
+
+// Inflation
+new Chart(document.getElementById("chartInflation"), {type:"line",
+  data:{labels:D.labels, datasets:[
+    {label:"Globale", data:D.inflation, borderColor:NAVY, backgroundColor:NAVY, tension:.25, pointRadius:0, borderWidth:2},
+    {label:"Alimentaire", data:D.alim, borderColor:GREEN, tension:.25, pointRadius:0, borderWidth:1.6},
+    {label:"Énergie", data:D.energie, borderColor:ORANGE, tension:.25, pointRadius:0, borderWidth:1.6},
+  ]}, options:{...baseOpts, scales:{...baseOpts.scales, y:{title:{display:true,text:"%"}}}}});
+
+// Top produits
+new Chart(document.getElementById("chartProducts"), {type:"bar",
+  data:{labels:D.top_products.labels, datasets:[{label:"Hausse cumulée (%)",
+    data:D.top_products.values, backgroundColor:RED}]},
+  options:{...baseOpts, indexAxis:"y", plugins:{legend:{display:false}}}});
+
+// Prévision
+const hist = D.indice.slice(), pad = D.forecast_labels.map(()=>null);
+const fcSeries = D.indice.map(()=>null).concat(D.forecast_indice);
+new Chart(document.getElementById("chartForecast"), {type:"line",
+  data:{labels:D.labels.concat(D.forecast_labels), datasets:[
+    {label:"Historique", data:hist.concat(pad), borderColor:NAVY, tension:.2, pointRadius:0, borderWidth:2},
+    {label:"Prévision SARIMA", data:fcSeries, borderColor:RED, borderDash:[6,4], tension:.2, pointRadius:0, borderWidth:2},
+  ]}, options:{...baseOpts, scales:{...baseOpts.scales, y:{title:{display:true,text:"IHPC"}}}}});
+</script>
+</body>
+</html>

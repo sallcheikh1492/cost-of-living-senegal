@@ -1,0 +1,7 @@
+﻿region,zone,mult_prix,sens_infl,poids_zone
+Dakar,Ouest,1.06,0.95,0.34
+Thiès,Centre-Ouest,1.0,1.0,0.18
+Saint-Louis,Nord,0.985,1.03,0.12
+Diourbel,Centre,0.97,1.05,0.14
+Kaolack,Centre-Sud,0.98,1.04,0.12
+Kolda,Sud,1.015,1.12,0.1
