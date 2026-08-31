@@ -10,9 +10,9 @@
 ![PowerBI](https://img.shields.io/badge/Power%20BI-dashboard-F2C811)
 ![Forecast](https://img.shields.io/badge/Forecast-SARIMA%20%7C%20Prophet-success)
 
-### 🌍 [**Voir le site web du projet (démo en ligne)**](https://kheuch1492.github.io/cost-of-living-senegal/)
+### 🌍 [**Voir le site web du projet (démo en ligne)**](https://sallcheikh1492.github.io/cost-of-living-senegal/)
 
-[![Aperçu du site web](docs/assets/site_hero.png)](https://kheuch1492.github.io/cost-of-living-senegal/)
+[![Aperçu du site web](docs/assets/site_hero.png)](https://sallcheikh1492.github.io/cost-of-living-senegal/)
 
 > *Tableau de bord interactif (graphiques alimentés par les données du projet) :*
 
